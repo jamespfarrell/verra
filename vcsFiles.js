@@ -13,12 +13,19 @@ async function readFiles () {
     const { vcs } = require(dir+'/'+file)
     
 
-    const proponents = vcs.value.map(o => o.proponent)
-    proponents.forEach(proponent => {
-      proponentsObj[proponent] = proponentsObj[proponent] ? proponentsObj[proponent] : {} 
-      proponentsObj[proponent].proponent = proponent
-      proponentsObj[proponent].count = proponentsObj[proponent].count ? (proponentsObj[proponent].count + 1) : 1
-    });
+    const proponents = vcs.value.map(o => {
+      return {
+        proponent: o.proponent,
+        id: o.resourceIdentifier
+      }
+    })
+    console.log(`proponents : ${JSON.stringify(proponents, null, 2)}`)
+    
+    // proponents.forEach(proponent => {
+    //   proponentsObj[proponent] = proponentsObj[proponent] ? proponentsObj[proponent] : {} 
+    //   proponentsObj[proponent].proponent = proponent
+    //   proponentsObj[proponent].count = proponentsObj[proponent].count ? (proponentsObj[proponent].count + 1) : 1
+    // });
     
   });
   console.log(`files : ${JSON.stringify(files, null, 2)}`)
