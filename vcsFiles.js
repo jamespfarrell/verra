@@ -12,7 +12,12 @@ async function readFiles () {
     console.log(file);
     const { vcs } = require(dir+'/'+file)
     
+   const testA = vcs.value.map(o => o.id === '2259').length // 1
+   const testB = vcs.value.map(o => o.id === '2263').length // 2
 
+   console.log(`testA ---> : ${testA}`)
+   console.log(`testB ---> : ${testB}`)
+   process.exit()
     const proponents = vcs.value.map(o => {
       return {
         proponent: o.proponent,
@@ -20,16 +25,15 @@ async function readFiles () {
       }
     })
     console.log(`proponents : ${JSON.stringify(proponents, null, 2)}`)
+    console.log(`proponents : ${JSON.stringify(proponents, null, 2)}`)
     
-    // proponents.forEach(proponent => {
-    //   proponentsObj[proponent] = proponentsObj[proponent] ? proponentsObj[proponent] : {} 
-    //   proponentsObj[proponent].proponent = proponent
-    //   proponentsObj[proponent].count = proponentsObj[proponent].count ? (proponentsObj[proponent].count + 1) : 1
-    // });
+    proponents.forEach(proponent => {
+      proponentsObj[proponent.id] = proponentsObj[proponent.id] ? proponentsObj[proponent.id] : {} 
+      proponentsObj[proponent.id].proponent = proponent.proponent
+      proponentsObj[proponent.id].count = proponentsObj[proponent.id].count ? (proponentsObj[proponent.id].count + 1) : 1
+    });
     
   });
-  console.log(`files : ${JSON.stringify(files, null, 2)}`)
-  
   console.log(`proponentsObj : ${JSON.stringify(proponentsObj, null, 2)}`)
 
 }
