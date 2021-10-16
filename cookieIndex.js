@@ -15,6 +15,9 @@ async function fetchProjects () {
       console.log(`response.data ---> : ${response.data}`)
       // const cookieClient.save('cookie-name', response.data, { path: '/' })
     }
+    console.log(`response : ${JSON.stringify(response, null, 2)}`)
+    
+    process.exit()
     const sResponse = await request.get(
       'uiapi/resource/resource/search?maxResults=2000&$count=true&$skip=0&$top=50'
     )

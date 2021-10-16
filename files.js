@@ -1,3 +1,5 @@
+const { start } = require('repl');
+
 const fs = require('fs').promises;
 
 // directory path
@@ -5,27 +7,27 @@ const dir = './vcs/';
 let proponentsObj = {}
 
 async function readFiles () {
-  console.log(`fs.readdir ---> : ${fs.readdir}`)
+  
   // list all files in the directory
-  const files = await fs.readdir(dir);
+  const files = await fs.readdir(dir)
+
   files.forEach(file => {
-    console.log(file);
+    
     const { vcs } = require(dir+'/'+file)
     
-   const testA = vcs.value.map(o => o.id === '2259').length // 1
-   const testB = vcs.value.map(o => o.id === '2263').length // 2
+  //  const testA = vcs.value.filter(o => o.id === '2259').length // 1
+  //  const testB = vcs.value.filter(o => o.id === '2263').length // 2
 
-   console.log(`testA ---> : ${testA}`)
-   console.log(`testB ---> : ${testB}`)
-   process.exit()
+  //  console.log(`testA ---> : ${testA}`)
+  //  console.log(`testB ---> : ${testB}`)
+  //  process.exit()
+
     const proponents = vcs.value.map(o => {
       return {
         proponent: o.proponent,
         id: o.resourceIdentifier
       }
     })
-    console.log(`proponents : ${JSON.stringify(proponents, null, 2)}`)
-    console.log(`proponents : ${JSON.stringify(proponents, null, 2)}`)
     
     proponents.forEach(proponent => {
       proponentsObj[proponent.id] = proponentsObj[proponent.id] ? proponentsObj[proponent.id] : {} 
@@ -34,8 +36,20 @@ async function readFiles () {
     });
     
   });
-  console.log(`proponentsObj : ${JSON.stringify(proponentsObj, null, 2)}`)
-
+  
+  return proponentsObj
 }
 
-readFiles()
+async function go() {
+  const vcs = await readFiles()
+  //console.log(`vcs : ${JSON.stringify(vcs, null, 2)}`)
+  for (const project in vcs) {
+    //https://registry.verra.org/app/projectDetail/VCS/1364
+    
+  }
+  
+}
+//go()
+module.exports = {
+  readFiles
+}
